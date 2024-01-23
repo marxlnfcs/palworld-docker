@@ -23,6 +23,8 @@ ENV PW_PUBLIC_IP=""
 ENV PW_PUBLIC_PORT=8211
 ENV PW_MULTITHREAD_ENABLED=true
 ENV PW_COMMUNITY_SERVER=true
+ENV PW_RCON_ENABLED=false
+ENV PW_RCON_PORT=25575
 
 ### Dependencies ###
 # Switch to "root" user to setup image
