@@ -1,7 +1,7 @@
 name: docker-release
 on:
   push:
-    branches: ["branches"]
+    branches: ["**"]
     tags: ["v*.*.*"]
   pull_request:
     branches: ["main"]
@@ -19,9 +19,8 @@ jobs:
           images: |
             marxlnfcs/palworld-dedicated-server
           tags: |
-            type=schedule
-            type=ref,event=branch
-            type=ref,event=pr
+            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+            type=ref,enable=${{ github.ref != format('refs/heads/{0}', github.event.repository.default_branch) }},event=branch
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
