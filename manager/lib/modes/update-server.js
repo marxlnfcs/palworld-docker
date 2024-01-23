@@ -33,7 +33,6 @@ export async function updateServer(logTitle = true) {
         currentStatus = 'downloading';
         break;
       }
-      default: console.log(status);
     }
   }
 
