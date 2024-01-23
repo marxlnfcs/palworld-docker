@@ -1,0 +1,32 @@
+version: '3.9'
+services:
+  palworld:
+    build: .
+    container_name: palworld-dedicated-server
+    image: palworld-dedicated-server
+    restart: always
+    network_mode: bridge
+    ports:
+      # SERVER
+      - target: 8211
+        published: 8211
+        protocol: udp
+        mode: host
+
+      # RCON
+      - target: 25575
+        published: 25575
+        protocol: tcp
+        mode: host
+    environment:
+      - PW_START_MODE=0
+      - PW_DEBUG=true
+      - PW_MAX_PLAYERS=32
+      - PW_SERVER_NAME="palworld-dedicated-server"
+      - PW_SERVER_DESCRIPTION="My Palworld dedicated server"
+      - PW_SERVER_PASSWORD="Chang3M3!"
+      - PW_SERVER_ADMIN_PASSWORD="Chang3M3!Admin"
+      - PW_PUBLIC_IP=10.0.0.1
+      - PW_PUBLIC_PORT=8211
+      - PW_MULTITHREAD_ENABLED=true
+      - PW_COMMUNITY_SERVER=true

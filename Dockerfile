@@ -1,0 +1,69 @@
+### Base Image ###
+FROM node:21-bullseye
+
+### Labels ###
+LABEL maintainer="marxlnfcs"
+
+### Environments ###
+# OS environment variables
+ENV TIMEZONE=Europe/Berlin
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PUID=0
+ENV PGID=0
+
+# Application environment variables
+ENV PW_START_MODE=0
+ENV PW_DEBUG=false
+ENV PW_MAX_PLAYERS=32
+ENV PW_SERVER_NAME="palworld-dedicated-server"
+ENV PW_SERVER_DESCRIPTION="My Palworld dedicated server"
+ENV PW_SERVER_PASSWORD=""
+ENV PW_SERVER_ADMIN_PASSWORD="Chang3M3!"
+ENV PW_PUBLIC_IP=10.0.0.1
+ENV PW_PUBLIC_PORT=8211
+ENV PW_MULTITHREAD_ENABLED=true
+ENV PW_COMMUNITY_SERVER=true
+
+### Dependencies ###
+# Switch to "root" user to setup image
+USER root
+
+# Create steam user
+RUN adduser --home /data --shell /bin/bash --disabled-password steam
+
+# Install dependencies
+RUN dpkg --add-architecture i386
+RUN apt update && apt install -y make python build-essential lib32gcc-s1
+
+# Create directories
+RUN mkdir -p /data/config
+RUN mkdir -p /data/manager
+RUN mkdir -p /data/steam
+RUN mkdir -p /data/server
+
+# Install NPM dependencies
+WORKDIR /data/manager
+COPY ./manager/package.json /data/manager/package.json
+RUN npm install
+
+# Copy files/directories to image
+COPY ./manager/lib /data/manager/lib
+COPY ./manager/server-manager.js /data/manager/server-manager.js
+
+# Set permissions for user
+RUN chmod -R 777 /data && chown -R steam:steam /data
+RUN chmod -R 777 /tmp
+
+### Finalizing Image ###
+# Switch to "steam" user to finalize image
+WORKDIR /data
+USER steam
+
+EXPOSE 8211/udp
+EXPOSE 25575/udp
+
+VOLUME '/data/config'
+VOLUME '/data/server'
+VOLUME '/data/steam'
+
+ENTRYPOINT ["node", "/data/manager/server-manager.js"]

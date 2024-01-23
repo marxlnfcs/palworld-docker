@@ -1,0 +1,16 @@
+{
+  "name": "palworld-server-manager",
+  "version": "1.0.0",
+  "main": "server-manager.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server-manager.js",
+    "build": "",
+    "test": "docker compose up --build"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.2",
+    "ini": "^4.1.1",
+    "steamcmd-interface": "^4.0.2"
+  }
+}
