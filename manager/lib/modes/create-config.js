@@ -4,6 +4,7 @@ import {dirname, resolve} from 'path';
 import {accessSync, constants as fsConstants, existsSync, mkdirSync, readFileSync, writeFileSync} from 'fs';
 import ini from 'ini';
 import os from "os";
+import {getExternalIP} from "../helpers/utils.js";
 
 export async function createConfig() {
   infoLog(`Creating temporary server configurations (AppId: ${getAppId()}) ...`);
@@ -66,9 +67,17 @@ export async function createConfig() {
     infoLog(`- None`, 2);
   }
 
+  // auto discover PublicIP and PublicPort if not set
+  if(!config.PublicIP) config.PublicIP = await getExternalIP();
+  if(!config.PublicPort) config.PublicPort = 8211;
+
   // save config
   stringifyConfig(FILE_CONFIG, config);
 
+}
+
+export function getServerConfig() {
+  return parseServerConfig(getAppConfigDir('PalWorldSettings.ini'));
 }
 
 /**

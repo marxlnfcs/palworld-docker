@@ -1,10 +1,12 @@
 import {infoLog, serverErrorLog, serverInfoLog} from "../helpers/logger.js";
 import {getAppDir, getAppExecutable, getAppId, getEnv} from "../helpers/env.js";
 import child_process from "child_process";
+import {getServerConfig} from "./create-config.js";
 
 export async function startServer() {
   return new Promise(async (resolve) => {
-    infoLog(`Starting server (AppId: ${getAppId()}) ...`);
+    const config = getServerConfig();
+    infoLog(`Starting server (AppId: ${getAppId()}) with address ${config.PublicIP}:${config.PublicPort}...`);
 
     // parse environment variables
     const isCommunityServer = getEnv('PW_COMMUNITY_SERVER', 'False').trim().toLowerCase() === 'true';
