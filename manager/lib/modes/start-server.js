@@ -21,7 +21,7 @@ export async function startServer() {
 
     // create process
     infoLog(`Starting Server with command: "${getAppExecutable()} ${args.join(' ')}"`, 1);
-    const proc = child_process.spawn(getAppExecutable(), {
+    const proc = child_process.spawn(getAppExecutable(), args, {
       cwd: getAppDir(),
     });
 
