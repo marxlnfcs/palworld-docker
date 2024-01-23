@@ -126,7 +126,8 @@ WorkSpeedRate=1.000000
 bIsMultiplay=False
 bIsPvP=False
 bCanPickupOtherGuildDeathPenaltyDrop=False
-bEnableNonLoginPenalty=TruebEnableFastTravel=True
+bEnableNonLoginPenalty=True
+bEnableFastTravel=True
 bIsStartLocationSelectByMap=True
 bExistPlayerAfterLogout=False
 bEnableDefenseOtherGuildPlayer=False
