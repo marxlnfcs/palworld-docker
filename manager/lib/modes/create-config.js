@@ -162,10 +162,25 @@ function stringifyConfig(file, config) {
   }
   writeFileSync(file, [
     '[/Script/Pal.PalGameWorldSettings]',
-    'OptionSettings=' + [
-      '(',
-      Object.entries(config).map(c => `${c[0]}="${c[1]}"`).join(','),
-      ')'
-    ].join('')
+    `OptionSettings=(${createOptionString(config)})`,
   ].join(os.EOL), { mode: 0o775 });
+}
+
+/**
+ * @param config {object}
+ * @return {string}
+ */
+function createOptionString(config) {
+  const options = []
+  Object.entries(config).map(([key, value]) => {
+    const valLower = `${value}`.trim().toLowerCase();
+    if(valLower === 'true' || valLower === 'false'){
+      options.push(`${key}=${valLower === 'true' ? 'True' : 'False'}`);
+    }else if(!isNaN(parseFloat(value)) || !isNaN(parseInt(value))){
+      options.push(`${key}=${value}`);
+    }else {
+      options.push(`${key}="${value}"`);
+    }
+  });
+  return options.join(',');
 }
