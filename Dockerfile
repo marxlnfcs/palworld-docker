@@ -60,7 +60,7 @@ WORKDIR /data
 USER steam
 
 EXPOSE 8211/udp
-EXPOSE 25575/udp
+EXPOSE 25575/tcp
 
 VOLUME "/data/server"
 VOLUME "/data/saves"
