@@ -9,8 +9,8 @@ export async function startServer() {
     infoLog(`Starting server (AppId: ${getAppId()}) with address ${config.PublicIP}:${config.PublicPort}...`);
 
     // parse environment variables
-    const isCommunityServer = getEnv('PW_COMMUNITY_SERVER', 'False').trim().toLowerCase() === 'true';
-    const isMultiThread = getEnv('PW_MULTITHREAD_ENABLED', 'True').trim().toLowerCase() === 'true';
+    const isCommunityServer = getEnv('PW_COMMUNITY_SERVER', 'false').trim().toLowerCase() === 'true';
+    const isMultiThread = getEnv('PW_MULTITHREAD_ENABLED', 'true').trim().toLowerCase() === 'true';
 
     // create startup arguments
     const args = [];
@@ -20,6 +20,7 @@ export async function startServer() {
     isMultiThread && args.push('-useperfthreads', '-NoAsyncLoadingThread', '-UseMultithreadForDS');
 
     // create process
+    infoLog(`Starting Server with command: "${getAppExecutable()} ${args.join(' ')}"`, 1);
     const proc = child_process.spawn(getAppExecutable(), {
       cwd: getAppDir(),
     });
