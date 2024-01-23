@@ -37,12 +37,13 @@ RUN apt install -y make python build-essential lib32gcc-s1 nodejs
 RUN mkdir -p /data/config
 RUN mkdir -p /data/manager
 RUN mkdir -p /data/server
+RUN mkdir -p /data/saves
 RUN mkdir -p /data/backups
 
 # Install NPM dependencies
 WORKDIR /data/manager
 COPY ./manager/package.json /data/manager/package.json
-RUN npm install
+RUN npm install --omit=dev
 
 # Copy files/directories to image
 COPY ./manager/lib /data/manager/lib
@@ -62,6 +63,7 @@ EXPOSE 8211/udp
 EXPOSE 25575/udp
 
 VOLUME "/data/server"
+VOLUME "/data/saves"
 VOLUME "/data/backups"
 
 ENTRYPOINT ["node", "/data/manager/server-manager.js"]

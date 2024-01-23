@@ -20,7 +20,7 @@ services:
         mode: host
     environment:
       - PW_START_MODE=0
-      - PW_DEBUG=true
+      - PW_DEBUG=false
       - PW_MAX_PLAYERS=32
       - PW_SERVER_NAME="palworld-dedicated-server"
       - PW_SERVER_DESCRIPTION="My Palworld dedicated server"

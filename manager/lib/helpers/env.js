@@ -38,7 +38,7 @@ export function getStartMode() {
  * @return {string}
  */
 export function getSteamCmdBinaryDir(path = null) {
-  return resolve(path ? join(getSteamCmdBinaryDir(), path) : getEnv('STEAMCMD_BINDIR', '/home/steam/steamcmd'));
+  return resolve(path ? join(getSteamCmdBinaryDir(), path) : getEnv('STEAMCMD_BINARYDIR', '/home/steam/steamcmd'));
 }
 
 /**
@@ -62,7 +62,23 @@ export function getSteamCmdInstallDir(path = null) {
  * @return {string}
  */
 export function getConfigDir(path = null) {
-  return resolve(path ? join(getConfigDir(), path) : getEnv('STEAMCMD_CONFIGDIR', '/data/config'));
+  return resolve(path ? join(getConfigDir(), path) : getEnv('PW_CONFIGDIR', '/data/config'));
+}
+
+/**
+ * @param path {string|null}
+ * @return {string}
+ */
+export function getBackupsDir(path = null) {
+  return resolve(path ? join(getBackupsDir(), path) : getEnv('PW_BACKUPSDIR', '/data/backups'));
+}
+
+/**
+ * @param path {string|null}
+ * @return {string}
+ */
+export function getSavesDir(path = null) {
+  return resolve(path ? join(getSavesDir(), path) : getEnv('PW_SAVESDIR', '/data/saves'));
 }
 
 /**
@@ -85,7 +101,7 @@ export function getAppExecutable() {
  * @return {string}
  */
 export function getAppSavedDir(path = null) {
-  return resolve(path ? join(getAppSavedDir(), path) : getAppDir('Saved'));
+  return resolve(path ? join(getAppSavedDir(), path) : getAppDir('Pal/Saved'));
 }
 
 /**
@@ -93,5 +109,5 @@ export function getAppSavedDir(path = null) {
  * @return {string}
  */
 export function getAppConfigDir(path = null) {
-  return resolve(path ? join(getAppConfigDir(), path) : getAppSavedDir('Config/' + (process.platform === 'win32' ? 'WindowsServer' : 'LinuxServer')));
+  return resolve(path ? join(getAppConfigDir(), path) : getSavesDir('Config/' + (process.platform === 'win32' ? 'WindowsServer' : 'LinuxServer')));
 }

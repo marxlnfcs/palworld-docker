@@ -39,14 +39,16 @@ Prioritization order of configuration options
 #### PW_START_MODE
 The start mode is a special variable where you can do different actions like install server and start container without updating it all the time.
 
-| Mode | Description                                                                                                |
-|------|------------------------------------------------------------------------------------------------------------|
-| 0    | INSTALL and START server - ``Install the server only if this has not been done yet.``                      |
-| 1    | INSTALL server and STOP container - ``Install the server only if this has not been done yet.``             |
-| 2    | UPDATE and START server - ``If the server is not installed, it will be installed automatically.``          |
-| 3    | UPDATE server and STOP container - ``If the server is not installed, it will be installed automatically.`` |
-|      |                                                                                                            |
-| 99   | STARTS container into maintenance/debug mode - ``For debugging only``                                      |
+| Mode | Description                                                                                                                                      |
+|------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| 0    | INSTALL and START server - ``Install the server only if this has not been done yet.``                                                            |
+| 1    | INSTALL server and STOP container - ``Install the server only if this has not been done yet.``                                                   |
+| 2    | UPDATE and START server - ``If the server is not installed, it will be installed automatically.``                                                |
+| 3    | UPDATE server and STOP container - ``If the server is not installed, it will be installed automatically.``                                       |
+| 4    | BACKUP and START server - ``If the server is not installed, the backup task will be skipped. After that, the PW_START_MODE=0 will be executed.`` |
+| 5    | BACKUP server and STOP - ``If the server is not installed, the backup task will be skipped.``                                                    |
+|      |                                                                                                                                                  |
+| 99   | STARTS container into maintenance/debug mode - ``For debugging only``                                                                            |
 
 ---
 
@@ -143,6 +145,16 @@ bUseAuth=True
 BanListURL="https://api.palworldgame.com/api/banlist.txt"
 ```
 
+## Volumes
+
+---
+| Volume                   | Description                                                                             |
+|--------------------------|-----------------------------------------------------------------------------------------|
+| /data/server             | Stores the server files                                                                 |
+| /data/saves              | Stores the SaveGames of the server that are usually stored under /data/server/Pal/Saved |
+| /data/backups            | Stores the backup files                                                                 |
+
+
 ## FAQ
 
 ---
@@ -153,12 +165,6 @@ You can ignore these S_API errors. The server will start as normal
 ### I've set a SERVER_PASSWORD but when I'm connecting I get a message like "No password entered"
 There is an issue with the Palworld. When you try to connect manually with the IP (bottom right corner), there is no password prompt.
 If you really need a server password, just start the server as an community server.
-
-## TODO's / Planned features
-
----
-
-- Add a new PW_START_MODE to backup the server saves
 
 ## Software used
 

@@ -1,10 +1,14 @@
 import {infoLog} from "../helpers/logger.js";
-import {getAppId} from "../helpers/env.js";
+import {getAppId, getSteamCmdInstallDir} from "../helpers/env.js";
 import {getSteamCmd, isAppInstalled} from "../helpers/steamcmd.js";
 import {bytesToSize} from "../helpers/utils.js";
 
-export async function installServer() {
-  infoLog(`Installing server (AppId: ${getAppId()}) ...`);
+/**
+ * @param logTitle {boolean}
+ * @returns {Promise<void>}
+ */
+export async function installServer(logTitle = true) {
+  logTitle && infoLog(`Checking server (AppId: ${getAppId()}) ...`);
 
   // skip if has been already installed
   if(await isAppInstalled()){
@@ -13,6 +17,7 @@ export async function installServer() {
   }
 
   // start installation of server
+  infoLog(`Installing server under "${getSteamCmdInstallDir()}" ...`, 1);
   const generator = getSteamCmd().updateApp(getAppId(), {
     validate: true,
   });
@@ -22,9 +27,6 @@ export async function installServer() {
   for await (let status of generator){
     switch(status.state){
       case 'downloading': {
-        if(currentStatus !== status.state){
-          infoLog('Starting installation ...', 1);
-        }
         infoLog(`Installing ${status.progressPercent}% (${bytesToSize(status.progressAmount)} / ${bytesToSize(status.progressTotalAmount)}) ...`, 2);
         currentStatus = 'downloading';
         break;
