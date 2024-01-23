@@ -9,7 +9,7 @@
     <a href="https://hub.docker.com/repository/docker/marxlnfcs/palworld-dedicated-server" target="_blank"><img src="https://img.shields.io/docker/image-size/marxlnfcs/palworld-dedicated-server/latest" alt="Image Size"/></a>
 </p>
 
-![palworld-docker](https://raw.githubusercontent.com/marxlnfcs/palworld-docker/main/preview.jpg "PalWorld")
+![palworld-docker](https://raw.githubusercontent.com/marxlnfcs/palworld-docker/main/preview.png "PalWorld")
 
 ## Using Image
 
