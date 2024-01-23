@@ -29,7 +29,7 @@ ENV PW_COMMUNITY_SERVER=true
 USER root
 
 # Create steam user
-RUN adduser --home /data --shell /bin/bash --disabled-password steam
+RUN adduser --home /home/steam --shell /bin/bash --disabled-password steam
 
 # Install dependencies
 RUN dpkg --add-architecture i386
@@ -38,7 +38,6 @@ RUN apt update && apt install -y make python build-essential lib32gcc-s1
 # Create directories
 RUN mkdir -p /data/config
 RUN mkdir -p /data/manager
-RUN mkdir -p /data/steam
 RUN mkdir -p /data/server
 
 # Install NPM dependencies
@@ -51,7 +50,8 @@ COPY ./manager/lib /data/manager/lib
 COPY ./manager/server-manager.js /data/manager/server-manager.js
 
 # Set permissions for user
-RUN chmod -R 777 /data && chown -R steam:steam /data
+RUN chmod -R 775 /data && chown -R steam:steam /data
+RUN chmod -R 775 /home/steam && chown -R steam:steam /home/steam
 RUN chmod -R 777 /tmp
 
 ### Finalizing Image ###
@@ -64,6 +64,5 @@ EXPOSE 25575/udp
 
 VOLUME '/data/config'
 VOLUME '/data/server'
-VOLUME '/data/steam'
 
 ENTRYPOINT ["node", "/data/manager/server-manager.js"]

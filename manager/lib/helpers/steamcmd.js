@@ -11,7 +11,7 @@ let steamCmd = null;
  */
 export function isSteamCmdInstalled() {
   try{
-    accessSync(getSteamCmdBinaryExec, constants.X_OK);
+    accessSync(getSteamCmdBinaryExec(), constants.X_OK);
     return true;
   }catch{
     return false;
