@@ -38,7 +38,7 @@ export function getStartMode() {
  * @return {string}
  */
 export function getSteamCmdBinaryDir(path = null) {
-  return resolve(path ? join(getSteamCmdBinaryDir(), path) : getEnv('STEAMCMD_BINDIR', '/home/steam'));
+  return resolve(path ? join(getSteamCmdBinaryDir(), path) : getEnv('STEAMCMD_BINDIR', '/home/steam/steamcmd'));
 }
 
 /**

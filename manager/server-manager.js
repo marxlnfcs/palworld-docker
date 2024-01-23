@@ -27,7 +27,7 @@ async function run(){
       await installServer();
       break;
     }
-    case 2: { // Update server and STOP
+    case 2: { // Update server and START
       await initSteamCmd();
       await updateServer();
       await createConfig();

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node server-manager.js",
-    "build": "",
+    "build": "docker build ../",
     "test": "docker compose up --build"
   },
   "dependencies": {

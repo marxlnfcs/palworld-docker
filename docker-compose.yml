@@ -19,7 +19,7 @@ services:
         protocol: tcp
         mode: host
     environment:
-      - PW_START_MODE=99
+      - PW_START_MODE=0
       - PW_DEBUG=true
       - PW_MAX_PLAYERS=32
       - PW_SERVER_NAME="palworld-dedicated-server"
@@ -30,6 +30,3 @@ services:
       - PW_PUBLIC_PORT=8211
       - PW_MULTITHREAD_ENABLED=true
       - PW_COMMUNITY_SERVER=true
-      - http_proxy=http://10.48.202.23:8080/
-      - https_proxy=http://10.48.202.23:8080/
-      - no_proxy=gcu.lab,t-systems.at,neonet.at,dsh.at,cleannet.int

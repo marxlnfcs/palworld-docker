@@ -1,5 +1,5 @@
 ### Base Image ###
-FROM node:21-bullseye
+FROM cm2network/steamcmd
 
 ### Labels ###
 LABEL maintainer="marxlnfcs"
@@ -28,17 +28,16 @@ ENV PW_COMMUNITY_SERVER=true
 # Switch to "root" user to setup image
 USER root
 
-# Create steam user
-RUN adduser --home /home/steam --shell /bin/bash --disabled-password steam
-
 # Install dependencies
 RUN dpkg --add-architecture i386
-RUN apt update && apt install -y make python build-essential lib32gcc-s1
+RUN apt install -y curl && curl -fsSL https://deb.nodesource.com/setup_20.x | bash
+RUN apt install -y make python build-essential lib32gcc-s1 nodejs
 
 # Create directories
 RUN mkdir -p /data/config
 RUN mkdir -p /data/manager
 RUN mkdir -p /data/server
+RUN mkdir -p /data/backups
 
 # Install NPM dependencies
 WORKDIR /data/manager
@@ -62,7 +61,7 @@ USER steam
 EXPOSE 8211/udp
 EXPOSE 25575/udp
 
-VOLUME '/data/config'
-VOLUME '/data/server'
+VOLUME "/data/server"
+VOLUME "/data/backups"
 
 ENTRYPOINT ["node", "/data/manager/server-manager.js"]
