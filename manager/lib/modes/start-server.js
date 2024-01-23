@@ -1,4 +1,4 @@
-import {infoLog, serverErrorLog, serverInfoLog} from "../helpers/logger.js";
+import {infoLog, serverInfoLog} from "../helpers/logger.js";
 import {getAppDir, getAppExecutable, getAppId, getEnv} from "../helpers/env.js";
 import child_process from "child_process";
 import {getServerConfig} from "./create-config.js";
@@ -26,7 +26,7 @@ export async function startServer() {
 
     // listen to stdout/stderr
     proc.stdout.on('data', (chunk) => serverInfoLog(chunk.toString(), 1));
-    proc.stderr.on('data', (chunk) => serverErrorLog(chunk.toString(), 1));
+    proc.stderr.on('data', (chunk) => serverInfoLog(chunk.toString(), 1));
 
     // listen to close
     proc.on('close', () => {
