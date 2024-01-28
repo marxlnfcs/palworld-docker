@@ -132,3 +132,4 @@ dist
 tmp
 .idea/
 manager/.env
+docker-compose.yml

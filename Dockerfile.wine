@@ -38,6 +38,14 @@ RUN dpkg --add-architecture i386
 RUN apt install -y curl && curl -fsSL https://deb.nodesource.com/setup_20.x | bash
 RUN apt install -y lib32gcc-s1 nodejs
 
+# Install wine
+RUN mkdir -p -m 755 /etc/apt/keyrings && \
+    apt install -y wget && \
+    wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key && \
+    wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/debian/dists/bullseye/winehq-bullseye.sources && \
+    apt update && \
+    apt install -y --install-recommends winehq-stable
+
 # Create directories
 RUN mkdir -p /data/config
 RUN mkdir -p /data/manager

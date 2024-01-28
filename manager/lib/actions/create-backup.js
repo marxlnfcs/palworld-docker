@@ -1,45 +1,44 @@
+import {infoLog} from "../utils/logger.js";
+import {createDir, deleteFile} from "../utils/fs.js";
+import {cpSync} from 'fs';
 import tar from 'tar';
-import {infoLog} from "../helpers/logger.js";
-import {getBackupsDir, getSavesDir} from "../helpers/env.js";
-import {cpSync, mkdirSync, rmSync} from "fs";
-import {basename, join} from 'path';
+import {getAppSavedDir, getBackupsDir, getSavesDir} from "../env.js";
+import {joinPaths} from "../utils/path.js";
 
-export async function createBackup() {
+export function createBackup() {
   return new Promise(async (resolve, reject) => {
     try{
 
-      infoLog('Creating backup ...');
+      // log start of action
+      infoLog('Creating backup...');
 
       // creating backup variables
       const backupName = generateBackupName();
       const backupTemp = getBackupsDir(backupName);
-      const backupTempDir = join(backupTemp, 'Pal/Saved');
+      const backupTempDir = joinPaths(backupTemp, 'Pal/Saved');
       const backupFile = getBackupsDir(`${backupName}.tar.gz`);
 
       // create temporary folder
-      infoLog(`Creating temporary folder "${backupTemp}" ...`, 1);
-      mkdirSync(backupTempDir, {
-        recursive: true,
-        mode: 0o775
-      });
+      infoLog(`Creating temporary folder "${backupTemp}"...`, 1);
+      createDir(backupTempDir);
 
       // copy save folder into backupTemp
-      infoLog(`Copying contents of "${getSavesDir()}" into temp folder ...`, 1);
-      cpSync(getSavesDir(), backupTempDir, {
+      infoLog(`Copying contents of "${getAppSavedDir()}" into temp folder...`, 1);
+      cpSync(getAppSavedDir(), backupTempDir, {
         recursive: true
       });
 
       // compress folder into tar.gz
-      infoLog(`Compressing contents of temporary folder "${backupTemp}" into file "${backupFile}" ...`, 1);
+      infoLog(`Compressing contents of temporary folder "${backupTemp}" into file "${backupFile}"...`, 1);
       await tar.c({
         gzip: true,
         file: backupFile,
         cwd: backupTemp
-      }, ['Pal'])
+      }, ['Pal']);
 
       // delete temporary folder
-      infoLog(`Deleting temporary folder "${backupTemp}" ...`, 1);
-      rmSync(backupTemp, { recursive: true });
+      infoLog(`Deleting temporary folder "${backupTemp}"...`, 1);
+      deleteFile(backupTemp);
 
       // backup was successful
       infoLog(`The backup was successfully created at "${backupFile}".`);

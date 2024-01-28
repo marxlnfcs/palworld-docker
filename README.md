@@ -17,11 +17,15 @@
 
 ### Docker / ContainerD / Podman
 ```
-docker image pull marxlnfcs/palworld-dedicated-server
+# Default Image
+marxlnfcs/palworld-dedicated-server:latest
+
+# Image with WineHQ installed (e.g. Required for Modding)
+marxlnfcs/palworld-dedicated-server:wine
 ```
 
 ### Kubernetes
-If you want to deploy an Palworld dedicated server on Kubernetes, please visit <a href="https://github.com/marxlnfcs/palworld-helm" target="_blank">marxlnfcs/palworld-helm</a>
+If you want to deploy a Palworld dedicated server on Kubernetes, please visit <a href="https://github.com/marxlnfcs/palworld-helm" target="_blank">marxlnfcs/palworld-helm</a>
 
 ## Configuration
 

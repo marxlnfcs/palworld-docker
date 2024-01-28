@@ -5,13 +5,16 @@
   "type": "module",
   "scripts": {
     "start": "node server-manager.js",
-    "build": "docker build ../",
     "test": "docker compose up --build"
   },
   "dependencies": {
+    "@cdktf/node-pty-prebuilt-multiarch": "^0.10.1-pre.11",
+    "axios": "^1.6.7",
     "dotenv": "^16.3.2",
+    "extract-zip": "^2.0.1",
     "ini": "^4.1.1",
-    "steamcmd-interface": "^4.0.2",
+    "rxjs": "^7.8.1",
+    "strip-ansi": "^7.1.0",
     "tar": "^6.2.0"
   }
 }
