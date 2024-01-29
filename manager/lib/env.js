@@ -84,6 +84,7 @@ export function getAppId() {
  * @return {string}
  */
 export function getAppExecutable() {
+  if(getEnv('STEAMCMD_APP_EXECUTABLE')) return getEnv('STEAMCMD_APP_EXECUTABLE');
   switch(getAppPlatform()) {
     case 'linux': return getAppDir('PalServer.sh');
     case 'macos': return getAppDir('PalServer.sh');
