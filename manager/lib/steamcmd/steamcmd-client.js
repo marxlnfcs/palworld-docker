@@ -120,7 +120,7 @@ export class SteamCMDClient {
    */
   #getExecutable() {
     switch(getPlatform()) {
-      case 'linux':
+      case 'linux': return this.getBinaryDir('steamcmd.sh');
       case 'macos': return this.getBinaryDir('steamcmd.sh');
       case 'windows': return this.getBinaryDir('steamcmd.exe');
     }
@@ -241,7 +241,7 @@ export class SteamCMDClient {
         // return app information
         resolve({
           id: appId || this.#appId,
-          installed: /install state:\s+(.*)/.exec(result)?.[1]?.trim().toLowerCase() === 'fully installed'
+          installed: /install state:\s+(.*)/.exec(result)?.[1]?.trim()?.toLowerCase()?.indexOf('fully installed') != -1
         });
 
       }catch(e){

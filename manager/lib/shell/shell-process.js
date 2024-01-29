@@ -43,7 +43,7 @@ export class ShellProcess {
 
   /**
    * Stores the cwd
-   * @type {SpawnOptions|null}
+   * @type {IPtyForkOptions|IWindowsPtyForkOptions|null}
    * @private
    */
   #options = null;
@@ -51,17 +51,12 @@ export class ShellProcess {
   /**
    * @param executable {string}
    * @param args {string[]|null}
-   * @param options {SpawnOptions|null}
+   * @param options {IPtyForkOptions|IWindowsPtyForkOptions|null}
    */
   constructor(executable, args = [], options = null){
     this.#executable = executable || null;
     this.#args = Array.isArray(args) ? args : [];
-    this.#options = {
-      ...(options || {}),
-      shell: false,
-      detached: false,
-      stdio: 'pipe',
-    };
+    this.#options = options || {};
     this.#run();
   }
 
@@ -79,10 +74,10 @@ export class ShellProcess {
 
     // create pty terminal
     this.#proc = pty.spawn(this.#executable, this.#args, {
-      name: 'xterm-color',
-      cols: 80,
-      rows: 30,
-      cwd: getWorkDir(),
+      ...this.#options,
+      name: this.#options?.name ?? 'xterm-color',
+      cols: this.#options?.cols ?? 80,
+      rows: this.#options?.rows ?? 30,
     });
 
     // on data

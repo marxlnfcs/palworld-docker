@@ -18,16 +18,16 @@ export function initFileSystem() {
         createDir(getConfigDir());
       }
 
-      // create saves dir if not exists
-      if(!exists(getSavesDir())){
-        infoLog(`Creating directory "${getSavesDir()}"...`, 1);
-        createDir(getSavesDir());
-      }
-
       // create app config dir if not exists
       if(!exists(getAppConfigDir())){
         infoLog(`Creating directory "${getAppConfigDir()}"...`, 1);
         createDir(getAppConfigDir());
+      }
+
+      // create saves dir if not exists
+      if(!exists(getSavesDir())){
+        infoLog(`Creating directory "${getSavesDir()}"...`, 1);
+        createDir(getSavesDir());
       }
 
       // create app saves dir if not exists

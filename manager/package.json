@@ -4,7 +4,7 @@
   "main": "server-manager.js",
   "type": "module",
   "scripts": {
-    "start": "node server-manager.js",
+    "start": "node lib/index.js",
     "test": "docker compose up --build"
   },
   "dependencies": {

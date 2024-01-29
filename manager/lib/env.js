@@ -151,6 +151,18 @@ export function getAppSavedDir(path = null) {
  * @param path {string|null}
  * @return {string}
  */
+export function getAppBinariesDir(path = null) {
+  switch(getAppPlatform()){
+    case 'linux': return joinPaths(getAppDir('Pal/Binaries/Linux'), path);
+    case 'macos': return joinPaths(getAppDir('Pal/Binaries/Linux'), path);
+    case 'windows': return joinPaths(getAppDir('Pal/Binaries/Win64'), path);
+  }
+}
+
+/**
+ * @param path {string|null}
+ * @return {string}
+ */
 export function getAppConfigDir(path = null) {
   switch(getAppPlatform()){
     case 'linux': return joinPaths(getAppSavedDir('Config/LinuxServer'), path);

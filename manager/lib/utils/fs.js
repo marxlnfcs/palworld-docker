@@ -1,9 +1,11 @@
-import {existsSync, mkdirSync, writeFileSync, rmSync} from 'fs';
+import {existsSync, mkdirSync, writeFileSync, rmSync, accessSync, readFileSync} from 'fs';
 import axios from 'axios';
 import {createObservableStream} from "./rxjs.js";
-import {dirname} from "path";
+import {dirname, resolve} from "path";
 import extract from 'extract-zip';
 import tar from 'tar';
+import * as constants from "constants";
+import ini from "ini";
 
 /**
  * @param path {string}
@@ -105,4 +107,46 @@ export async function extractArchive(file, destination) {
     }
   }
 
+}
+
+/**
+ * Parse an INI and returns it as object
+ * @param file {string}
+ * @param emptyOnNotFound {boolean}
+ * @return object
+ */
+export function loadIniFromFile(file, emptyOnNotFound = true) {
+
+  // check if file exists
+  if(!existsSync(file)){
+    if(emptyOnNotFound) return {};
+    throw Error(`INI File "${ resolve(file) }" not found.`);
+  }
+
+  // check if file is readable
+  try{ accessSync(file, constants.R_OK) } catch {
+    throw Error(`Unable to access INI File "${ resolve(file) }".`);
+  }
+
+  // parse ini file
+  let content = null;
+  try{ content = ini.parse(readFileSync(file, 'utf-8')) } catch {
+    throw Error(`Unable to parse INI File "${ resolve(file) }".`);
+  }
+
+  // return content
+  return content || {};
+
+}
+
+/**
+ * Parse an INI and returns it as object
+ * @param object {object}
+ * @param file {string}
+ * @return void
+ */
+export function writeIniToFile(object, file) {
+  try{ writeFileSync(file, ini.stringify(object)) } catch {
+    throw Error(`Unable to write INI to File "${ resolve(file) }".`);
+  }
 }

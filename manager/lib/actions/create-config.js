@@ -6,6 +6,7 @@ import os from "os";
 import {getEnv} from "../utils/env.js";
 import {infoLog, infoObjectLog} from "../utils/logger.js";
 import {getExternalIP, isIPAddress} from "../utils/others.js";
+import {loadIniFromFile} from "../utils/fs.js";
 
 export function createConfig() {
   return new Promise(async (resolve, reject) => {
@@ -31,7 +32,7 @@ export function createConfig() {
       const config = parseServerConfig(FILE_CONFIG_TEMPLATE);
 
       // parse local config
-      const localConfig = parseIni(FILE_CONFIG_LOCAL);
+      const localConfig = loadIniFromFile(FILE_CONFIG_LOCAL);
 
       // parse environment variables
       const envConfig = {
@@ -89,42 +90,13 @@ export function getServerConfig() {
 
 /**
  * @param file {string}
- * @param emptyOnNotFound {boolean}
- * @return object
- */
-function parseIni(file, emptyOnNotFound = true) {
-
-  // check if file exists
-  if(!existsSync(file)){
-    if(emptyOnNotFound) return {};
-    throw Error(`INI File "${ resolve(file) }" not found.`);
-  }
-
-  // check if file is readable
-  try{ accessSync(file, fsConstants.R_OK) } catch {
-    throw Error(`Unable to access INI File "${ resolve(file) }".`);
-  }
-
-  // parse ini file
-  let content = null;
-  try{ content = ini.parse(readFileSync(file, 'utf-8')) } catch {
-    throw Error(`Unable to parse INI File "${ resolve(file) }".`);
-  }
-
-  // return content
-  return content || {};
-
-}
-
-/**
- * @param file {string}
  * @return object
  */
 function parseServerConfig(file) {
   try{
 
     // parse file
-    let configContent = parseIni(file)['/Script/Pal']['PalGameWorldSettings']['OptionSettings'];
+    let configContent = loadIniFromFile(file)['/Script/Pal']['PalGameWorldSettings']['OptionSettings'];
 
     // check if config starts with "(" and ends with ")"
     if(!configContent.startsWith('(') || !configContent.endsWith(')')){
