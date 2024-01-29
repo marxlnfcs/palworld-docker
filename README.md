@@ -19,9 +19,6 @@
 ```
 # Default Image
 marxlnfcs/palworld-dedicated-server:latest
-
-# Image with WineHQ installed (e.g. Required for Modding)
-marxlnfcs/palworld-dedicated-server:wine
 ```
 
 ### Kubernetes

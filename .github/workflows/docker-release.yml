@@ -15,9 +15,6 @@ jobs:
           - dockerfile: ./DockerFile
             image: marxlnfcs/palworld-dedicated-server
             tag: latest
-          - dockerfile: ./Dockerfile.wine
-            image: marxlnfcs/palworld-dedicated-server
-            tag: wine
 
     steps:
       - name: Checkout repository
