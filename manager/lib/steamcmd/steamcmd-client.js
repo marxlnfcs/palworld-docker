@@ -274,7 +274,7 @@ export class SteamCMDClient {
         const args = [`app_update "${appId || this.#appId}"`];
 
         // add app_update options
-        options?.validate && args.push('-validate');
+        (options?.validate ?? true) && args.push('-validate');
         (options?.language || this.#language) && args.push(`-language "${options.language || this.#language}"`);
         (options?.betaName || this.#betaName) && args.push(`-beta "${options.betaName || this.#betaName}"`);
         (options?.betaPassword || this.#betaPassword) && args.push(`-betapassword "${options.betaPassword || this.#betaPassword}"`);
