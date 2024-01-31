@@ -70,6 +70,7 @@ export function createConfig() {
       if(!config.PublicPort) config.PublicPort = 8211;
 
       // save config
+      infoObjectLog(config);
       stringifyConfig(FILE_CONFIG, config);
 
       // done
@@ -107,7 +108,7 @@ function normalizeConfig(object, template) {
     key = templateKeys[key.trim().toLowerCase()] || key;
 
     // set value
-    object[key] = value;
+    config[key] = value;
 
   });
 
