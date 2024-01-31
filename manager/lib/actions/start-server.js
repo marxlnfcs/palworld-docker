@@ -1,6 +1,6 @@
 import {getServerConfig} from "./create-config.js";
-import {infoLog} from "../utils/logger.js";
-import {getAppBinariesDir, getAppDir, getAppExecutable, getAppId, getAppPlatform} from "../env.js";
+import {infoLog, infoObjectLog} from "../utils/logger.js";
+import {getAppBinariesDir, getAppDir, getAppExecutable, getAppExecutableCWD, getAppId, getAppPlatform} from "../env.js";
 import {getEnv} from "../utils/env.js";
 import {Shell} from "../shell/shell.js";
 import {toPromise} from "../utils/rxjs.js";
@@ -28,11 +28,16 @@ export function startServer() {
         isMultiThread ? '-UseMultithreadForDS' : null,
       ]);
 
+      // log information about the process
+      infoObjectLog({
+        Executable: command.executable,
+        Arguments: command.arguments.join(' '),
+        WorkingDirectory: command.cwd || getAppBinariesDir(),
+      }, 1);
+
       // create process
-      infoLog(`Starting Server with command: "${command.executable} ${command.arguments.join(' ')}"`, 1);
       const proc = Shell.run(command.executable, command.arguments, {
         cwd: command.cwd || getAppBinariesDir(),
-        env: command.env || {},
       });
 
       // listen on data
@@ -64,7 +69,7 @@ export async function createCommandLinux(args = []){
   return {
     executable: getAppExecutable(),
     arguments: args,
-    cwd: getAppDir(),
+    cwd: getAppExecutableCWD(),
   }
 }
 
@@ -76,6 +81,6 @@ export async function createCommandWindows(args = []){
   return {
     executable: getAppExecutable(),
     arguments: args,
-    cwd: getAppDir(),
+    cwd: getAppExecutableCWD(),
   }
 }

@@ -61,26 +61,38 @@ async function run(){
       break;
     }
 
-    // update and start server
+    // install server, create config and stop
     case 2: {
+      await runActions('INIT_STEAMCMD', 'INSTALL_SERVER', 'CREATE_CONFIG');
+      break;
+    }
+
+    // update and start server
+    case 3: {
       await runActions('INIT_STEAMCMD', 'UPDATE_SERVER', 'CREATE_CONFIG', 'START_SERVER');
       break;
     }
 
     // update server and stop
-    case 3: {
+    case 4: {
       await runActions('INIT_STEAMCMD', 'UPDATE_SERVER');
       break;
     }
 
-    // backup and start server
+    // update server, create config and stop
     case 4: {
+      await runActions('INIT_STEAMCMD', 'UPDATE_SERVER', 'CREATE_CONFIG');
+      break;
+    }
+
+    // backup and start server
+    case 5: {
       await runActions('CREATE_BACKUP', 'INIT_STEAMCMD', 'CREATE_CONFIG', 'START_SERVER');
       break;
     }
 
     // backup server and stop
-    case 5: {
+    case 6: {
       await runActions('CREATE_BACKUP');
       break;
     }

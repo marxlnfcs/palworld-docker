@@ -1,6 +1,7 @@
 import {getEnv} from "./utils/env.js";
 import {joinPaths} from "./utils/path.js";
 import {getPlatform} from "./utils/platform.js";
+import {dirname} from "path";
 
 /**
  * @return {number}
@@ -84,12 +85,17 @@ export function getAppId() {
  * @return {string}
  */
 export function getAppExecutable() {
-  if(getEnv('STEAMCMD_APP_EXECUTABLE')) return getEnv('STEAMCMD_APP_EXECUTABLE');
+  if(getEnv('APP_EXECUTABLE')) return getEnv('APP_EXECUTABLE');
   switch(getAppPlatform()) {
     case 'linux': return getAppDir('PalServer.sh');
     case 'macos': return getAppDir('PalServer.sh');
     case 'windows': return getAppDir('PalServer.exe');
   }
+}
+
+export function getAppExecutableCWD() {
+  if(getEnv('APP_EXECUTABLE_CWD')) return getEnv('APP_EXECUTABLE_CWD');
+  return dirname(getAppExecutable());
 }
 
 /**

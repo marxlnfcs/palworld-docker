@@ -44,10 +44,12 @@ The start mode is a special variable where you can do different actions like ins
 |------|--------------------------------------------------------------------------------------------------------------------------------------------------|
 | 0    | INSTALL and START server - ``Install the server only if this has not been done yet.``                                                            |
 | 1    | INSTALL server and STOP container - ``Install the server only if this has not been done yet.``                                                   |
-| 2    | UPDATE and START server - ``If the server is not installed, it will be installed automatically.``                                                |
-| 3    | UPDATE server and STOP container - ``If the server is not installed, it will be installed automatically.``                                       |
-| 4    | BACKUP and START server - ``If the server is not installed, the backup task will be skipped. After that, the PW_START_MODE=0 will be executed.`` |
-| 5    | BACKUP server and STOP - ``If the server is not installed, the backup task will be skipped.``                                                    |
+| 2    | INSTALL server, create config and STOP - ``Install the server only if this has not been done yet.``                                              |
+| 3    | UPDATE and START server - ``If the server is not installed, it will be installed automatically.``                                                |
+| 4    | UPDATE server and STOP container - ``If the server is not installed, it will be installed automatically.``                                       |
+| 5    | UPDATE server, create config and STOP - ``If the server is not installed, it will be installed automatically.``                                  |
+| 6    | BACKUP and START server - ``If the server is not installed, the backup task will be skipped. After that, the PW_START_MODE=0 will be executed.`` |
+| 7    | BACKUP server and STOP - ``If the server is not installed, the backup task will be skipped.``                                                    | |
 |      |                                                                                                                                                  |
 | 99   | STARTS container into maintenance/debug mode - ``For debugging only``                                                                            |
 

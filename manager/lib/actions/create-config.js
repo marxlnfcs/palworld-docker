@@ -30,12 +30,13 @@ export function createConfig() {
 
       // create config object
       const config = parseServerConfig(FILE_CONFIG_TEMPLATE);
+      const template = Object.create(config);
 
       // parse local config
-      const localConfig = loadIniFromFile(FILE_CONFIG_LOCAL);
+      const localConfig = normalizeConfig(loadIniFromFile(FILE_CONFIG_LOCAL), template);
 
-      // parse environment variables
-      const envConfig = {
+      // parse env config
+      const envConfig = normalizeConfig({
         'ServerName': getEnv('PW_SERVER_NAME'),
         'ServerDescription': getEnv('PW_SERVER_DESCRIPTION'),
         'ServerPassword': getEnv('PW_SERVER_PASSWORD'),
@@ -48,10 +49,7 @@ export function createConfig() {
 
         'RCONEnabled': getEnv('PW_RCON_ENABLED'),
         'RCONPort': getEnv('PW_RCON_PORT'),
-      };
-
-      // delete NIL values in the config
-      Object.keys(envConfig).map(k => envConfig[k] === null && delete envConfig[k]);
+      }, template);
 
       // apply config entries from local config file
       if(Object.keys(localConfig).length){
@@ -86,6 +84,36 @@ export function createConfig() {
 
 export function getServerConfig() {
   return parseServerConfig(getAppConfigDir('PalWorldSettings.ini'));
+}
+
+function normalizeConfig(object, template) {
+
+  // create empty config
+  const config = {};
+
+  // extract keys of template
+  const templateKeys = {};
+  Object.keys(template).map(k => templateKeys[k.trim().toLowerCase()] = k);
+
+  // create config from keys
+  Object.entries(object).map(([key, value]) => {
+
+    // skip if value is nil
+    if(typeof value === 'undefined' || value === null){
+      return;
+    }
+
+    // get key from templateKeys or as a fallback the current key
+    key = templateKeys[key.trim().toLowerCase()] || key;
+
+    // set value
+    object[key] = value;
+
+  });
+
+  // return new config
+  return config;
+
 }
 
 /**
