@@ -4,7 +4,7 @@ import {accessSync, constants as fsConstants, existsSync, mkdirSync, readFileSyn
 import ini from 'ini';
 import os from "os";
 import {getEnv} from "../utils/env.js";
-import {infoLog, infoObjectLog} from "../utils/logger.js";
+import {debugLog, debugObjectLog, infoLog, infoObjectLog} from "../utils/logger.js";
 import {getExternalIP, isIPAddress} from "../utils/others.js";
 import {loadIniFromFile} from "../utils/fs.js";
 
@@ -70,7 +70,8 @@ export function createConfig() {
       if(!config.PublicPort) config.PublicPort = 8211;
 
       // save config
-      infoObjectLog(config);
+      debugLog('Showing the whole configuration that will be applied to the server:', 1);
+      debugObjectLog(config, 3);
       stringifyConfig(FILE_CONFIG, config);
 
       // done
